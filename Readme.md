@@ -1,3 +1,4 @@
 ## VPC Modules
 
-![image](https://github.com/DatNguyen2711/VPC-module/assets/81822483/c71e11a6-9eab-4560-b47e-16a9c9d89d2f)
+![image](https://github.com/DatNguyen2711/VPC-module/assets/81822483/bee690a1-5a63-4c78-a0e6-aa4e3cc1f0c9)
+
