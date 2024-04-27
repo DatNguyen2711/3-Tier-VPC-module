@@ -45,7 +45,7 @@ resource "aws_internet_gateway" "ig" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    "Name" = "custom"
+    "Name" = "my-internet-gateway"
   }
 }
 
@@ -58,7 +58,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    "Name" = "public"
+    "Name" = "public-web-rt"
   }
 }
 
@@ -83,7 +83,7 @@ resource "aws_nat_gateway" "public" {
   }
 }
 
-resource "aws_route_table" "public_nat_gateway" {
+resource "aws_route_table" "public_app_nat_gateway" {
   vpc_id = aws_vpc.vpc.id
   route {
     cidr_block = "0.0.0.0/0"
@@ -91,19 +91,30 @@ resource "aws_route_table" "public_nat_gateway" {
   }
 
   tags = {
-    "Name" = "private"
+    "Name" = "private-app-rt"
+  }
+}
+resource "aws_route_table" "public_db_nat_gateway" {
+  vpc_id = aws_vpc.vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.public.id
+  }
+
+  tags = {
+    "Name" = "private-db-rt"
   }
 }
 
 resource "aws_route_table_association" "private_db_subnet_association" {
   for_each       = { for k, v in aws_subnet.private_db_subnet : k => v }
   subnet_id      = each.value.id
-  route_table_id = aws_route_table.public_nat_gateway.id
+  route_table_id = aws_route_table.public_db_nat_gateway.id
 }
 
 
 resource "aws_route_table_association" "private_app_subnet_association" {
   for_each       = { for k, v in aws_subnet.private_app_subnet : k => v }
   subnet_id      = each.value.id
-  route_table_id = aws_route_table.public_nat_gateway.id
+  route_table_id = aws_route_table.public_app_nat_gateway.id
 }
