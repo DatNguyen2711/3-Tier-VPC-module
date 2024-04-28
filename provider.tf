@@ -5,8 +5,14 @@ terraform {
       version = "~> 5.0"
     }
   }
+  cloud {
+    organization = "Datlaid-FPT"
+
+    workspaces {
+      name = "My-WS"
+    }
+  }
 }
 provider "aws" {
   region  = "ap-southeast-1"
-  profile = "default" # Tên profile trong file credentials chứa access key và secret key
 }

@@ -11,7 +11,6 @@ resource "aws_security_group" "sg" {
       protocol    = ingress.value["protocol"]
       cidr_blocks = ingress.value["cidr_blocks"]
       description = ingress.value["description"]
-      security_groups = ingress.value["security_groups"]
     }
   }
 
@@ -23,7 +22,6 @@ resource "aws_security_group" "sg" {
       protocol    = egress.value["protocol"]
       cidr_blocks = egress.value["cidr_blocks"]
       description = egress.value["description"]
-      security_groups = egress.value["security_groups"]
     }
   }
 
