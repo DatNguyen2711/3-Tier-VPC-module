@@ -35,7 +35,7 @@ resource "aws_subnet" "public_web_subnet" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = var.public_web_subnet[count.index]
   availability_zone = var.availability_zone[count.index % length(var.availability_zone)]
-
+  
   tags = {
     "Name" = "public_web_subnet-${count.index + 1}"
   }
